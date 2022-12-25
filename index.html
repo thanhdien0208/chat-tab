@@ -35,12 +35,15 @@
         .table-project {
             width: 100%;
             padding-top: 50px;
+            display: flex;
+            justify-content: center;
         }
         
         .table-project .td-project {
             padding: 0 60px;
             color: #333;
             display: block;
+            width: 65%;
         }
         
         .table-project .td-project table th {
@@ -402,139 +405,233 @@
             -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
             background-color: #f5f5f5;
         }
+        /* SMARTPHONES PORTRAIT */
+        
+        @media only screen and (min-width: 300px) {
+            body {
+                overflow-y: auto;
+            }
+            .table-project {
+                display: block;
+            }
+            .table-project .td-project {
+                padding: 0 30px;
+                width: 100%;
+            }
+            .container {
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .td-chat {
+                width: 100%;
+            }
+            .bottom-bar .chat input {
+                width: 75%;
+                left: 10%;
+            }
+        }
+        /* TABLETS PORTRAIT */
+        
+        @media only screen and (min-width: 768px) {
+            .table-project {
+                display: block;
+            }
+            .table-project .td-project {
+                padding: 0 30px;
+                width: 100%;
+            }
+            .bottom-bar .chat input {
+                width: 83%;
+                left: 8%;
+            }
+        }
+        /* TABLET / DESKTOP */
+        
+        @media only screen and (min-width: 1023px) {
+            body {
+                overflow-y: auto;
+            }
+            .table-project {
+                display: block;
+            }
+            .table-project .td-project {
+                padding: 0 30px;
+                width: 100%;
+            }
+            .container {
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .td-chat {
+                width: 100%;
+            }
+            .bottom-bar .chat input {
+                width: 83%;
+                left: 8%;
+            }
+        }
+        
+        @media only screen and (min-width: 1024px) {
+            body {
+                overflow-y: hidden;
+            }
+            .table-project {
+                display: flex;
+            }
+            .table-project .td-project {
+                padding: 0 30px;
+                width: 70%;
+            }
+            .container {
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 0px;
+                padding-bottom: 20px;
+            }
+            .td-chat {
+                width: 30%;
+            }
+            .bottom-bar .chat input {
+                width: 80%;
+                left: 8%;
+            }
+        }
     </style>
 </head>
 
-<body>
-    <table class="table-project">
-        <tr>
-            <td class="td-project">
-                <table style="width: 100%;">
-                    <tr>
-                        <th>STT</th>
-                        <th>Demo 1</th>
-                        <th>Demo 1</th>
-                        <th>Demo 1</th>
-                        <th>Demo 1</th>
-                        <th>Demo 1</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                        <td>abc</td>
-                    </tr>
-                </table>
-            </td>
-            <td class="td-chat">
-                <div class="container">
-                    <div class="tab">
-                        <ul class="tabs-btn">
-                            <li class="tab-btn"><i class="fa-sharp fa-solid fa-comment"></i> Chat</li>
-                            <li class="tab-btn"><i class="fa-solid fa-folder-open"></i> File</li>
-                        </ul>
-                        <div class="tabs-content style-scroll-table">
+<body class="style-scroll-table">
+    <div class="table-project">
+        <div class="td-project">
+            <table style="width: 100%;">
+                <tr>
+                    <th>STT</th>
+                    <th>Demo 1</th>
+                    <th>Demo 1</th>
+                    <th>Demo 1</th>
+                    <th>Demo 1</th>
+                    <th>Demo 1</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                </tr>
+            </table>
+        </div>
+        <div class="td-chat">
+            <div class="container">
+                <div class="tab">
+                    <ul class="tabs-btn">
+                        <li class="tab-btn"><i class="fa-sharp fa-solid fa-comment"></i> Chat</li>
+                        <li class="tab-btn"><i class="fa-solid fa-folder-open"></i> File</li>
+                    </ul>
+                    <div class="tabs-content style-scroll-table">
 
 
-                            <div class="tab-content">
-                                <div class="messenger-content ">
-                                    <!-- Noi dung tin nhan -->
-                                    <div class="middle style-scroll-table">
-                                        <div class="voldemort">
-                                            <div class="incoming">
-                                                <div class="bubble">Hey, Father's Day is coming up..</div>
-                                                <div class="bubble admin">
-                                                    What are you getting.. Oh, oops sorry dude.Oh, oops sorry dude.Oh, oops sorry
+                        <div class="tab-content">
+                            <div class="messenger-content ">
+                                <!-- Noi dung tin nhan -->
+                                <div class="middle style-scroll-table">
+                                    <div class="voldemort">
+                                        <div class="incoming">
+                                            <div class="bubble">Hey, Father's Day is coming up..</div>
+                                            <div class="bubble admin">
+                                                What are you getting.. Oh, oops sorry dude.Oh, oops sorry dude.Oh, oops sorry
 
-                                                    <span class="status-admin">
+                                                <span class="status-admin">
                                                     9:40am
                                                     <i class="fa-solid fa-check-double"></i>
                                                 </span>
-                                                </div>
-
                                             </div>
-                                            <div class="outgoing">
-                                                <div class="bubble">Nah, it's cool.</div>
-                                                <div class="bubble user">
-                                                    Well you should get your Dad a cologne. Here smell it. Oh wait! ...
-                                                    <span class="status-user">
+
+                                        </div>
+                                        <div class="outgoing">
+                                            <div class="bubble">Nah, it's cool.</div>
+                                            <div class="bubble user">
+                                                Well you should get your Dad a cologne. Here smell it. Oh wait! ...
+                                                <span class="status-user">
                                                     9:45am 
                                                     <i class="fa-solid fa-check-double"></i> 
                                                 </span>
-                                                </div>
-
                                             </div>
-                                            <div class="incoming ">
-                                                <div class="bubble">Hey, Father's Day is coming up..</div>
-                                                <div class="bubble admin">
-                                                    What are you getting.. Oh, oops sorry dude.
-                                                    <span class="status-admin">
+
+                                        </div>
+                                        <div class="incoming ">
+                                            <div class="bubble">Hey, Father's Day is coming up..</div>
+                                            <div class="bubble admin">
+                                                What are you getting.. Oh, oops sorry dude.
+                                                <span class="status-admin">
                                                     9:46am
                                                     <i class="fa-solid fa-check-double"></i>
                                                 </div>
@@ -822,9 +919,8 @@
                     </div>
 
                 </div>
-            </td>
-        </tr>
-    </table>
+        </div>
+    </div>
 
     <!--JS -->
     <script>
