@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Tab</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+        
+        body {
+            background-color: #fff;
+            font-family: 'Open Sans', sans-serif;
+            overflow: hidden;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .table-project {
+            width: 100%;
+            padding-top: 50px;
+        }
+        
+        .table-project .td-project {
+            padding: 0 60px;
+            color: #333;
+            display: block;
+        }
+        
+        .table-project .td-project table th {
+            text-align: start;
+            font-size: 14px;
+            padding: 10px 0;
+        }
+        
+        .table-project .td-project td {
+            padding: 5px 0;
+            font-size: 13px;
+        }
+        
+        .table-project .td-project table th,
+        .table-project .td-project table td {
+            padding-left: 8px;
+        }
+        
+        .table-project .td-project table,
+        .table-project .td-project th,
+        .table-project .td-project td {
+            border: 1px solid #cecece;
+            border-collapse: collapse;
+            vertical-align: middle;
+        }
+        
+        .container {
+            padding-left: 60px;
+            padding-right: 60px;
+            margin: 0 auto;
+        }
+        
+        .tab {
+            margin: 0 0 2em;
+        }
+        
+        .tabs-btn {
+            display: flex;
+            justify-content: start;
+        }
+        
+        .tab-btn {
+            color: #fff;
+            text-align: center;
+            padding: 10px 15px;
+            background: linear-gradient(244.18deg, #5483d7 12.06%, #5041bc 80.76%);
+            border: 1px solid #fff;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tab-btn:not(:last-of-type) {
+            border-right: 0;
+        }
+        
+        .tabs-content {
+            height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1em;
+            border: 1px solid #fff;
+            border-top: 0;
+            background-color: #fff;
+            width: 100%;
+        }
+        
+        .td-chat {
+            width: 35%;
+        }
+        
+        .td-chat .tab-content .search-box {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        .td-chat .tab-content .search-box input {
+            padding: 8px 0;
+            padding-left: 30px;
+            width: 100%;
+            border: 1px solid #e1e1e1;
+            outline: none;
+        }
+        
+        .td-chat .tab-content .search-box input::placeholder {
+            color: #ccc;
+        }
+        
+        .td-chat .tab-content .search-box input:focus {
+            outline: 1px solid #5041bc;
+        }
+        
+        .td-chat .tab-content .search-box i {
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            color: #ccc;
+        }
+        
+        .td-chat .tab-content .day-box {
+            padding: 10px;
+            border-bottom: 10px solid #fff;
+            background: #d0ddec;
+        }
+        
+        .td-chat .tab-content .day-box h3 {
+            font-size: 16px;
+            padding-bottom: 10px;
+        }
+        
+        .td-chat .tab-content .day-box .file-list {
+            display: block;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .td-chat .tab-content .day-box .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .td-chat .tab-content .day-box .file-item i {
+            font-size: 35px;
+            padding-right: 15px;
+            color: #888;
+        }
+        
+        .td-chat .tab-content .day-box .file-list small {
+            position: absolute;
+            top: 28px;
+            left: 42px;
+            font-size: 11px;
+            color: #aaa;
+        }
+        /* tab open */
+        
+        .tab-btn.tab-open {
+            background-color: #fff;
+            border-bottom: 0;
+            transition: 0.3s;
+        }
+        
+        .tab-content.tab-open {
+            display: block;
+        }
+        
+        .messenger-content {
+            position: relative;
+            height: 80vh;
+        }
+        /* Noi dung tin nhan */
+        
+        .middle {
+            position: absolute;
+            background: #d0ddec;
+            width: 100%;
+            opacity: 0.85;
+            top: 10px;
+            height: 85%;
+            overflow-y: auto;
+            border-radius: 5px;
+        }
+        
+        .incoming {
+            float: left;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            display: block;
+        }
+        
+        .incoming .bubble {
+            background: #eee;
+            width: 50%;
+        }
+        
+        .bubble {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 0.7em;
+            padding: 10px 10px 10px 12px;
+            border-radius: 12px 12px 12px 0px;
+        }
+        
+        .incoming .bubble.admin,
+        .outgoing .bubble.user {
+            position: relative;
+            padding: 10px 10px 20px 12px;
+        }
+        
+        .incoming .status-admin {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            font-size: 9px;
+            color: #999;
+        }
+        
+        .incoming .status-admin i,
+        .outgoing .status-user i {
+            color: #1bde17;
+            font-weight: 600;
+            font-size: 10px;
+        }
+        
+        .outgoing .status-user {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            font-size: 9px;
+            color: #999;
+        }
+        
+        .outgoing {
+            float: right;
+            padding: 10px;
+            width: 50%;
+            height: 100%;
+        }
+        
+        .outgoing .bubble {
+            background: linear-gradient(244.18deg, #5483d7 12.06%, #5041bc 80.76%);
+            color: #fff;
+            float: right;
+            border-radius: 12px 12px 0px 12px;
+        }
+        /* khung chat */
+        
+        .bottom-bar {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            height: 55px;
+            background: #FFF;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .bottom-bar .chat input {
+            padding: 7px;
+            width: 83%;
+            left: 8%;
+            position: absolute;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            bottom: 0;
+            background: #fff;
+            color: #5149bf;
+        }
+        
+        .bottom-bar .chat input::placeholder {
+            color: #c1c1c1;
+        }
+        
+        .bottom-bar .chat input:focus {
+            color: #c1c1c1;
+            outline: 0;
+        }
+        
+        .bottom-bar .chat button {
+            position: absolute;
+            border: 0;
+            font-size: 1.4em;
+            color: #5149bf;
+            bottom: 2%;
+            opacity: 0.8;
+            right: 17px;
+            cursor: pointer;
+            outline: 0;
+            background: none;
+        }
+        
+        .bottom-bar .chat button:hover {
+            transform: scale(1.1);
+            transition: all .3s ease-in-out;
+            color: #5149bf;
+        }
+        /* custom input file */
+        
+        #btn-upload {
+            float: left;
+        }
+        
+        #btn-upload .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-left: 5px;
+            margin-top: 20px;
+            width: 100%;
+            transform: all 0.5s;
+            cursor: pointer;
+        }
+        
+        #btn-upload .btn {
+            border: none;
+            color: #888;
+            background-color: white;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            text-align: start;
+        }
+        
+        #btn-upload .btn i {
+            font-size: 1.4em;
+            line-height: 35px;
+            color: #bbb;
+        }
+        
+        #btn-upload .upload-btn-wrapper:hover {
+            transform: scale(1.1);
+            transition: all .3s ease-in-out;
+            color: #5149bf;
+        }
+        
+        #btn-upload .upload-btn-wrapper input[type="file"] {
+            font-size: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+        }
+        /* Class Scroll*/
+        
+        .style-scroll-content::-webkit-scrollbar,
+        .style-scroll-table::-webkit-scrollbar {
+            width: 6px;
+            background-color: #f5f5f5;
+        }
+        
+        .style-scroll-content::-webkit-scrollbar-thumb {
+            background-color: #003a8c;
+        }
+        
+        .style-scroll-table::-webkit-scrollbar-thumb {
+            background-color: #C0C0C0;
+        }
+        
+        .style-scroll-content::-webkit-scrollbar-track,
+        .style-scroll-table::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="table-project">
+        <tr>
+            <td class="td-project">
+                <table style="width: 100%;">
+                    <tr>
+                        <th>STT</th>
+                        <th>Demo 1</th>
+                        <th>Demo 1</th>
+                        <th>Demo 1</th>
+                        <th>Demo 1</th>
+                        <th>Demo 1</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                        <td>abc</td>
+                    </tr>
+                </table>
+            </td>
+            <td class="td-chat">
+                <div class="container">
+                    <div class="tab">
+                        <ul class="tabs-btn">
+                            <li class="tab-btn"><i class="fa-sharp fa-solid fa-comment"></i> Chat</li>
+                            <li class="tab-btn"><i class="fa-solid fa-folder-open"></i> File</li>
+                        </ul>
+                        <div class="tabs-content style-scroll-table">
+
+
+                            <div class="tab-content">
+                                <div class="messenger-content ">
+                                    <!-- Noi dung tin nhan -->
+                                    <div class="middle style-scroll-table">
+                                        <div class="voldemort">
+                                            <div class="incoming">
+                                                <div class="bubble">Hey, Father's Day is coming up..</div>
+                                                <div class="bubble admin">
+                                                    What are you getting.. Oh, oops sorry dude.Oh, oops sorry dude.Oh, oops sorry
+
+                                                    <span class="status-admin">
+                                                    9:40am
+                                                    <i class="fa-solid fa-check-double"></i>
+                                                </span>
+                                                </div>
+
+                                            </div>
+                                            <div class="outgoing">
+                                                <div class="bubble">Nah, it's cool.</div>
+                                                <div class="bubble user">
+                                                    Well you should get your Dad a cologne. Here smell it. Oh wait! ...
+                                                    <span class="status-user">
+                                                    9:45am 
+                                                    <i class="fa-solid fa-check-double"></i> 
+                                                </span>
+                                                </div>
+
+                                            </div>
+                                            <div class="incoming ">
+                                                <div class="bubble">Hey, Father's Day is coming up..</div>
+                                                <div class="bubble admin">
+                                                    What are you getting.. Oh, oops sorry dude.
+                                                    <span class="status-admin">
+                                                    9:46am
+                                                    <i class="fa-solid fa-check-double"></i>
+                                                </div>
+                                            </div>
+                                            <div class="outgoing">
+                                                <div class="bubble">Nah, it's cool.</div>
+                                                <div class="bubble">Well you should get your Dad a cologne. Here smell it. Oh wait! ...</div>
+                                                <div class="bubble">Nah, it's cool.</div>
+                                                <div class="bubble user">
+                                                    Well you should get your Dad a cologne. Here smell it. Oh wait! ...
+                                                     <span class="status-user">
+                                                    9:47am 
+                                                    <i class="fa-solid fa-check-double"></i> 
+                                                </div>
+                                            </div>
+                                            <div class="incoming ">
+                                                <div class="bubble">Hello...</div>
+                                                <div class="bubble admin">
+                                                    What are you getting.. Oh, oops sorry dude. Well you should get your Dad a cologne. Here smell it. Oh wait! ...
+                                                    <span class="status-admin">
+                                                    9:46am
+                                                    <i class="fa-solid fa-check-double"></i>
+                                                </div>
+                                            </div>
+                                            <div class="outgoing">
+                                                <div class="bubble">Nah, it's cool.</div>
+                                                <div class="bubble">Well you should get your Dad a cologne. Here smell it. Oh wait! ...</div>
+                                                <div class="bubble">Nah, it's cool.</div>
+                                                <div class="bubble user">
+                                                    Well you should get your Dad a cologne. Here smell it. Oh wait! ...
+                                                     <span class="status-user">
+                                                    9:49am 
+                                                    <i class="fa-solid fa-check-double"></i> 
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Khung chat -->
+                                    <div class="bottom-bar">
+                                        <div id="btn-upload" class="fab btn_content">
+                                            <div class="upload-btn-wrapper">
+                                                <button class="btn btn-up">
+                                                <a href="#" class="dropbtn">
+                                                    <i class="fa-solid fa-paperclip"></i>
+                                                </a>
+                                            </button>
+                                                <input type="file" name="myfile" />
+                                            </div>
+                                        </div>
+                                        <div class="chat">
+
+                                            <input type="text" placeholder="Type a message..." />
+                                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-content ">
+                                <div class="search-box">
+                                    <input type="search" name="" id="search" placeholder="Tìm kiếm file">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 21 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 20 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 19 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 18 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 17 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 16 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 10 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 09 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 03 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 02 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                                <div class="day-box">
+                                    <h3>Ngày 01 tháng 12 năm 2022</h3>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                    <div class="file-list">
+                                        <a href="" class="file-item">
+                                            <i class="fa-solid fa-file"></i> File hợp đồng
+                                        </a>
+                                        <small>55.4 KB</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!--JS -->
+    <script>
+        const tab = document.querySelectorAll(".tab");
+        const toggleTab = function(element) {
+            const tabBtn = element.querySelectorAll(".tab-btn");
+            const tabContent = element.querySelectorAll(".tab-content");
+            tabBtn[0].classList.add("tab-open");
+            tabContent[0].classList.add("tab-open");
+
+            const removeTab = function(element) {
+                for (const i of element) {
+                    i.classList.remove("tab-open");
+                }
+            };
+            const openTab = function(index) {
+                removeTab(tabBtn);
+                removeTab(tabContent);
+                tabBtn[index].classList.add("tab-open");
+                tabContent[index].classList.add("tab-open");
+            };
+            tabBtn.forEach((el, i) => (el.onclick = () => openTab(i)));
+        };
+        [...tab].forEach((el) => toggleTab(el));
+    </script>
+</body>
+
+</html>
